@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Ticked = sequelize.define("tickeds", {
+    const Ticket = sequelize.define("tickets", {
         login: {
             type: Sequelize.STRING,
             primaryKey: true
@@ -33,5 +33,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return Ticked;
+    return Ticket;
 };

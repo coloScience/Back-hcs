@@ -1,4 +1,4 @@
-const controller = require("../controllers/ticked.controller");
+const controller = require("../controllers/ticket.controller");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -9,6 +9,6 @@ module.exports = function(app) {
         next();
     });
 
-    app.post("/api/ticked/create/", controller.tickedPost);
-    app.get("/api/ticked/get/", controller.tickedGet);
+    app.post("/api/ticket/create/", controller.ticketPost);
+    app.get("/api/ticket/get/", controller.ticketGet);
 };
