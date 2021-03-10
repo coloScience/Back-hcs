@@ -25,6 +25,9 @@ module.exports = (sequelize, Sequelize) => {
         reason: {
             type: Sequelize.STRING
         },
+        phone: {
+            type: Sequelize.STRING
+        },
         createdAt: {
             type: Sequelize.DATE
         },

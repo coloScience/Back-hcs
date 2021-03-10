@@ -5,7 +5,7 @@ const Ticket = db.ticket
 
 
 exports.ticketPost = (req,res) => {
-    console.log(req)
+    console.log(req.body)
     Ticket.create({
         login: req.body.login,
         email: req.body.email,
@@ -14,22 +14,24 @@ exports.ticketPost = (req,res) => {
         secondName: req.body.secondName,
         lastName: req.body.lastName,
         reason: req.body.reason,
+        phone: req.body.phone,
         createdAt: new Date(),
         updatedAt: new Date()
     })
         .then((record) => console.log(record))
         .then(res.status(200))
-    const createToken = () => {
-
-    }
 }
 exports.ticketGet = (req,res) => {
-    Ticket.findAll({raw:true}).then(tickets=>{
-        res.send(JSON.stringify(tickets))
-        res.status(200)
-    }).catch(err=>console.log(err));
-    const getTickets = () => {
-
+    console.log(req.headers)
+    if (req.headers.referer === 'http://localhost:8081/admin' && req.headers.authorization) {
+        Ticket.findAll({raw:true}).then(tickets=>{
+            res.send(JSON.stringify(tickets))
+            res.status(200)
+        }).catch(err=>console.log(err));
+    } else {
+        Ticket.findAll({where:{login: req.headers.login},raw:true}).then(tickets=>{
+            res.send(JSON.stringify(tickets))
+            res.status(200)
+        }).catch(err=>console.log(err));
     }
-    getTickets()
 }
