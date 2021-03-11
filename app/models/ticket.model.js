@@ -1,19 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
     const Ticket = sequelize.define("tickets", {
-        login: {
-            type: Sequelize.STRING,
-            primaryKey: true
+        id: {
+            type: Sequelize.BIGINT,
+            primaryKey: true,
+            autoIncrement: true
         },
         firstName: {
-            type: Sequelize.STRING
-        },
-        id: {
             type: Sequelize.STRING
         },
         secondName: {
             type: Sequelize.STRING
         },
         lastName: {
+            type: Sequelize.STRING
+        },
+        login: {
             type: Sequelize.STRING
         },
         email: {

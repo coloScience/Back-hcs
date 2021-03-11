@@ -51,5 +51,10 @@ function initial() {
     id: 3,
     name: "admin"
   });
-setTimeout(initial(), 1000)
+
+  Role.create({
+    id: 4,
+    name: "analyst"
+  });
+setTimeout(initial(), 10000)
 }
