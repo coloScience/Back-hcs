@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "10.1.0.180",
+  HOST: "77.51.186.158",
   USER: "morett",
   PASSWORD: "ithub123",
-  DB: "testForTest",
+  DB: "hcs",
   dialect: "mysql",
   pool: {
     max: 5,

@@ -1,29 +1,46 @@
 const db = require("../models");
+const {server_ip} = require('../config/hosts.config.js')
 const User = db.user;
 const Role = db.role;
 const Ticket = db.ticket
+const TicketStatus = db.ticketstatus
+const mysql = require('mysql');
 
+const connection = mysql.createConnection({
+    host: "77.51.186.158",
+    user: "morett",
+    password: "ithub123",
+    database: "hcs"
+});
 
-exports.ticketPost = (req,res) => {
+connection.connect(function(error){
+    if(!!error){
+        console.log(error);
+    }else{
+        console.log('Connected!:)');
+    }
+});
+
+exports.ticketPost = async (req,res) => {
     console.log(req.body)
-    Ticket.create({
+    let body = {
         login: req.body.login,
-        email: req.body.email,
-        title: req.body.title,
         firstName: req.body.firstName,
         secondName: req.body.secondName,
         lastName: req.body.lastName,
+        email: req.body.email,
+        title: req.body.title,
         reason: req.body.reason,
         phone: req.body.phone,
         createdAt: new Date(),
-        updatedAt: new Date()
-    })
-        .then((record) => console.log(record))
+        updatedAt: new Date(),
+        status: 'created'
+    }
+    Ticket.create(body)
         .then(res.status(200))
 }
 exports.ticketGet = (req,res) => {
-    console.log(req.headers)
-    if (req.headers.referer === 'http://localhost:8081/admin' && req.headers.authorization) {
+    if (req.headers.referer === `${server_ip}/manage` && req.headers.authorization) {
         Ticket.findAll({raw:true}).then(tickets=>{
             res.send(JSON.stringify(tickets))
             res.status(200)
@@ -35,3 +52,9 @@ exports.ticketGet = (req,res) => {
         }).catch(err=>console.log(err));
     }
 }
+exports.cangeStatus = async (req,res) => {
+
+    Ticket.update({status: req.body.status},{where: {id: req.body.id}})
+        .then(res.status.ok)
+}
+

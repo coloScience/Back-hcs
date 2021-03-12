@@ -9,6 +9,7 @@ module.exports = function(app) {
         next();
     });
 
-    app.post("/api/ticket/create/", controller.ticketPost);
-    app.get("/api/ticket/get/", controller.ticketGet);
+    app.post("/api/ticket/", controller.ticketPost);
+    app.post("/api/ticket/changeStatus", controller.cangeStatus);
+    app.get("/api/ticket/", controller.ticketGet);
 };
