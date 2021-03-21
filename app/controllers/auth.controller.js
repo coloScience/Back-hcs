@@ -10,11 +10,21 @@ let bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   // Save User to Database
-  User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  })
+  console.log(req.body)
+  if(req.body.password === req.body.repeatPassword) {
+    User.create({
+      firstName: req.body.firstName,
+      secondName: req.body.secondName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phone: req.body.phone,
+      brithDay: req.body.brithDay,
+      street: req.body.street,
+      house: req.body.house,
+      flat: req.body.flat,
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, 8)
+    })
     .then(user => {
       if (req.body.roles) {
         Role.findAll({
@@ -70,6 +80,7 @@ exports.signup = (req, res) => {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
+  }
 };
 
 exports.signin = (req, res) => {

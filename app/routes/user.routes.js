@@ -19,7 +19,7 @@ module.exports = function(app) {
   );
 
   app.get(
-    "/api/test/mod",
+    "/api/test/manager",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );

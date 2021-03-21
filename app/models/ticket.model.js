@@ -14,6 +14,15 @@ module.exports = (sequelize, Sequelize) => {
         lastName: {
             type: Sequelize.STRING
         },
+        street: {
+            type: Sequelize.STRING
+        },
+        house: {
+            type: Sequelize.STRING
+        },
+        flat: {
+            type: Sequelize.STRING
+        },
         login: {
             type: Sequelize.STRING
         },
@@ -34,9 +43,6 @@ module.exports = (sequelize, Sequelize) => {
         },
         updatedAt: {
             type: Sequelize.DATE
-        },
-        status: {
-            type: Sequelize.STRING
         }
     });
     sequelize.sync()

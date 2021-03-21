@@ -3,7 +3,6 @@ const {server_ip} = require('../config/hosts.config.js')
 const User = db.user;
 const Role = db.role;
 const Ticket = db.ticket
-const TicketStatus = db.ticketstatus
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
@@ -22,39 +21,54 @@ connection.connect(function(error){
 });
 
 exports.ticketPost = async (req,res) => {
-    console.log(req.body)
-    let body = {
-        login: req.body.login,
-        firstName: req.body.firstName,
-        secondName: req.body.secondName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        title: req.body.title,
-        reason: req.body.reason,
-        phone: req.body.phone,
+    let ticket = {
+        login: req.body.data.login,
+        firstName: req.body.data.firstName,
+        secondName: req.body.data.secondName,
+        lastName: req.body.data.lastName,
+        street: req.body.data.street,
+        house: req.body.data.house,
+        flat: req.body.data.flat,
+        email: req.body.data.email,
+        title: req.body.data.title,
+        reason: req.body.data.reason,
+        phone: req.body.data.phone,
         createdAt: new Date(),
         updatedAt: new Date(),
-        status: 'created'
     }
-    Ticket.create(body)
-        .then(res.status(200))
+    //Создаю новый способ реализации тикета через 3 нормальную форму
+    await connection.query(`select username from users where username = '${ticket.login}'`,(err, result, fields) => {
+        if (!err) {
+            Ticket.create(ticket)
+                .then(
+                    tickets => {
+                        let time = new Date().toISOString().slice(0, 19).replace('T', ' ')
+                        connection.query(`insert into ticket_statuses (ticketId, statusId, createdAt, updatedAt) value (${tickets.id}, 1, '${time}', '${time}')`, (err1, result1, fields1) => {
+                            res.send(result1)
+                        })
+                    }
+                )
+
+        }
+    })
 }
-exports.ticketGet = (req,res) => {
-    if (req.headers.referer === `${server_ip}/manage` && req.headers.authorization) {
-        Ticket.findAll({raw:true}).then(tickets=>{
-            res.send(JSON.stringify(tickets))
-            res.status(200)
-        }).catch(err=>console.log(err));
+exports.ticketGet = async (req,res) => {
+    if (req.headers.referer === `${server_ip}/manager` && !!req.body.headers.Authorization) {
+        connection.query('select * from tickets', (err, result) => {
+            res.send(result)
+        })
+    } else if (!!req.body.headers.Authorization) {
+        connection.query('select * from tickets', (err, result) => {
+            res.send(result)
+        })
     } else {
-        Ticket.findAll({where:{login: req.headers.login},raw:true}).then(tickets=>{
-            res.send(JSON.stringify(tickets))
-            res.status(200)
-        }).catch(err=>console.log(err));
+        res.send({error: 'not authorization'})
+        res.status(403)
+        console.log('user')
+
+        console.log(req)
+        console.log(req.body)
+        console.log(req.headers.referer)
+        console.log(req.body.headers.Authorization)
     }
 }
-exports.cangeStatus = async (req,res) => {
-
-    Ticket.update({status: req.body.status},{where: {id: req.body.id}})
-        .then(res.status.ok)
-}
-

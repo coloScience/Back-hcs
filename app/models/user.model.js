@@ -15,10 +15,19 @@ module.exports = (sequelize, Sequelize) => {
     phone: {
       type: Sequelize.STRING
     },
-    Address: {
+    street: {
+      type: Sequelize.STRING
+    },
+    house: {
+      type: Sequelize.STRING
+    },
+    flat: {
       type: Sequelize.STRING
     },
     email: {
+      type: Sequelize.STRING
+    },
+    brithDay: {
       type: Sequelize.STRING
     },
     password: {
