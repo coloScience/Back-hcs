@@ -58,17 +58,12 @@ exports.ticketGet = async (req,res) => {
             res.send(result)
         })
     } else if (!!req.body.headers.Authorization) {
-        connection.query('select * from tickets', (err, result) => {
+        connection.query(`select * from tickets where login = '${JSON.parse(req.body.headers.props).login}'`, (err, result) => {
             res.send(result)
         })
     } else {
         res.send({error: 'not authorization'})
         res.status(403)
         console.log('user')
-
-        console.log(req)
-        console.log(req.body)
-        console.log(req.headers.referer)
-        console.log(req.body.headers.Authorization)
     }
 }

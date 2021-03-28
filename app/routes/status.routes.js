@@ -11,4 +11,5 @@ module.exports = function(app) {
 
   app.post("/api/status", controller.changeStatus);
   app.post("/api/statusGet", controller.getStatus);
+  app.post("/api/rebase", controller.rebase);
 };
