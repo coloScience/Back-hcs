@@ -69,6 +69,9 @@ exports.signup = (req, res) => {
             res.status(200).send({
               id: user.id,
               username: user.username,
+              firstName: user.firstName,
+              secondName: user.secondName,
+              lastName: user.lastName,
               email: user.email,
               roles: authorities,
               accessToken: token
@@ -118,6 +121,9 @@ exports.signin = (req, res) => {
         res.status(200).send({
           id: user.id,
           username: user.username,
+          firstName: user.firstName,
+          secondName: user.secondName,
+          lastName: user.lastName,
           email: user.email,
           roles: authorities,
           accessToken: token
