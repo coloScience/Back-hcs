@@ -1,5 +1,5 @@
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("Добро пожаловать, публичный контент!");
 };
 
 exports.userBoard = (req, res) => {
@@ -11,5 +11,5 @@ exports.adminBoard = (req, res) => {
 };
 
 exports.moderatorBoard = (req, res) => {
-  res.status(200).send("Moderator Content.");
+  res.status(200).send("Назначения исполнителя на заявку.");
 };
